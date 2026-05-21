@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestão de Resíduos | Bracell</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-shape bg-shape-a"></div>
+  <div class="bg-shape bg-shape-b"></div>
+
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Aplicativo Operacional</p>
+      <h1>Gestão de Resíduos Industriais</h1>
+      <p class="subtitle">Baseado na apresentação de Gestão Ambiental da Bracell</p>
+    </div>
+    <div class="topbar-controls">
+      <div class="theme-switch" role="group" aria-label="Selecionar tema">
+        <button type="button" class="btn theme-toggle" id="theme-light" data-theme="light" aria-label="Tema claro" title="Tema claro">☀</button>
+        <button type="button" class="btn theme-toggle" id="theme-dark" data-theme="dark" aria-label="Tema escuro" title="Tema escuro">☾</button>
+      </div>
+      <nav class="nav-links">
+        <a href="#dashboard">Dashboard</a>
+        <a href="#residuos">Resíduos</a>
+        <a href="#tratamento">Tratamento</a>
+        <a href="#planos">Planos de Ação</a>
+        <a href="#relatorio">Relatório PRAD</a>
+        <a href="#galeria">Galeria</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero card reveal">
+      <div>
+        <h2>Visão Estratégica</h2>
+        <p>
+          Plataforma para registrar, acompanhar e analisar a gestão de resíduos com base nos indicadores,
+          práticas e planos de mitigação apresentados no estudo.
+        </p>
+        <div class="hero-badges">
+          <span>ISO 14001</span>
+          <span>PNRS 12.305/2010</span>
+          <span>Rastreabilidade MTR/CDF</span>
+          <span>Meta 2030: -90% aterro</span>
+        </div>
+      </div>
+      <img src="assets/images/image1.png" alt="Capa da apresentação de gestão ambiental" />
+    </section>
+
+    <section id="dashboard" class="card reveal">
+      <div class="section-head">
+        <h2>Dashboard Ambiental</h2>
+        <p>Indicadores da apresentação + dados operacionais cadastrados no aplicativo.</p>
+      </div>
+      <div id="kpi-grid" class="kpi-grid"></div>
+      <div class="stats-grid">
+        <article class="stats-card">
+          <h3>Status dos Registros</h3>
+          <div id="status-bars" class="bars"></div>
+        </article>
+        <article class="stats-card">
+          <h3>Destinação Atual</h3>
+          <div id="destino-list" class="list"></div>
+        </article>
+        <article class="stats-card">
+          <h3>Resumo Operacional</h3>
+          <ul id="resumo-operacional" class="simple-list"></ul>
+        </article>
+      </div>
+
+      <div class="chart-grid">
+        <article class="stats-card chart-card">
+          <h3>Gráfico de Destinação (kg)</h3>
+          <div id="chart-destino" class="donut-chart"></div>
+          <div id="chart-destino-legend" class="chart-legend"></div>
+        </article>
+        <article class="stats-card chart-card">
+          <h3>Gráfico de Status (Registros)</h3>
+          <div id="chart-status" class="donut-chart"></div>
+          <div id="chart-status-legend" class="chart-legend"></div>
+        </article>
+        <article class="stats-card chart-card">
+          <h3>Classe de Resíduo (kg)</h3>
+          <div id="chart-classe-bar" class="stacked-chart"></div>
+          <div id="chart-classe-legend" class="chart-legend"></div>
+        </article>
+      </div>
+
+      <div class="insights-grid">
+        <article class="stats-card insight-wide">
+          <h3>Tendência Mensal de Geração (kg)</h3>
+          <div id="tendencia-mensal" class="trend-bars"></div>
+        </article>
+        <article class="stats-card insight-wide">
+          <h3>Comparativo Mensal: Valorização x Aterro</h3>
+          <div class="compare-legend">
+            <span><i class="legend-dot valor"></i> Valorização</span>
+            <span><i class="legend-dot aterro"></i> Aterro</span>
+          </div>
+          <div id="comparativo-mensal" class="compare-bars-list"></div>
+        </article>
+        <article class="stats-card">
+          <h3>Distribuição por Classe</h3>
+          <div id="classe-bars" class="bars"></div>
+        </article>
+        <article class="stats-card">
+          <h3>Eficiência de Destinação</h3>
+          <ul id="eficiencia-list" class="simple-list"></ul>
+        </article>
+        <article class="stats-card">
+          <h3>Top Setores Geradores</h3>
+          <div id="origem-list" class="list"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="residuos" class="card reveal">
+      <div class="section-head">
+        <h2>Controle de Resíduos</h2>
+        <p>Cadastro de geração, classe, volume e destinação dos resíduos industriais.</p>
+      </div>
+
+      <div class="residuos-layout">
+        <article class="form-panel">
+          <h3 id="form-title">Novo Registro</h3>
+          <form id="residue-form">
+            <input type="hidden" id="registro-id" />
+
+            <label>Data
+              <input type="date" id="data" required />
+            </label>
+
+            <label>Tipo de Resíduo
+              <select id="tipo" required>
+                <option value="Cinzas (CAL) industriais">Cinzas (CAL) industriais</option>
+                <option value="Lodo biológico">Lodo biológico</option>
+                <option value="Óleos lubrificantes">Óleos lubrificantes</option>
+                <option value="Resíduos químicos">Resíduos químicos</option>
+                <option value="Resíduos recicláveis">Resíduos recicláveis</option>
+                <option value="Biomassa">Biomassa</option>
+                <option value="Solo contaminado">Solo contaminado</option>
+                <option value="Absorventes e EPIs contaminados">Absorventes e EPIs contaminados</option>
+              </select>
+            </label>
+
+            <label>Classe
+              <select id="classe" required>
+                <option value="Classe I">Classe I (Perigoso)</option>
+                <option value="Classe IIA">Classe IIA (Não inerte)</option>
+                <option value="Classe IIB">Classe IIB (Inerte)</option>
+              </select>
+            </label>
+
+            <label>Origem / Setor
+              <input type="text" id="origem" placeholder="Ex.: Caldeira de recuperação" required />
+            </label>
+
+            <label>Quantidade (kg)
+              <input type="number" id="quantidade" step="0.1" min="0" required />
+            </label>
+
+            <label>Destinação
+              <select id="destino" required>
+                <option value="Reciclagem">Reciclagem</option>
+                <option value="Coprocessamento">Coprocessamento</option>
+                <option value="Reaproveitamento energético">Reaproveitamento energético</option>
+                <option value="Aterro industrial licenciado">Aterro industrial licenciado</option>
+                <option value="Tratamento externo especializado">Tratamento externo especializado</option>
+              </select>
+            </label>
+
+            <label>Status
+              <select id="status" required>
+                <option value="Aguardando coleta">Aguardando coleta</option>
+                <option value="Em transporte">Em transporte</option>
+                <option value="Destinado">Destinado</option>
+                <option value="Não conformidade">Não conformidade</option>
+              </select>
+            </label>
+
+            <div class="form-actions">
+              <button type="submit" class="btn primary" id="save-btn">Salvar Registro</button>
+              <button type="button" class="btn" id="cancel-btn" hidden>Cancelar Edição</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="table-panel">
+          <div class="table-tools">
+            <input type="text" id="search" placeholder="Filtrar por tipo, setor ou destino" />
+            <select id="filtro-status">
+              <option value="">Todos os status</option>
+              <option value="Aguardando coleta">Aguardando coleta</option>
+              <option value="Em transporte">Em transporte</option>
+              <option value="Destinado">Destinado</option>
+              <option value="Não conformidade">Não conformidade</option>
+            </select>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Resíduo</th>
+                  <th>Classe</th>
+                  <th>Origem</th>
+                  <th>Quantidade (kg)</th>
+                  <th>Destinação</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="residue-table-body"></tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="tratamento" class="card reveal">
+      <div class="section-head">
+        <h2>Fluxo de Tratamento e Destinação</h2>
+        <p>Procedimento técnico com rastreabilidade e conformidade documental (MTR/CDF).</p>
+      </div>
+      <div id="fluxo-list" class="timeline-grid"></div>
+    </section>
+
+    <section id="planos" class="card reveal">
+      <div class="section-head">
+        <h2>Planos de Ação de Passivos</h2>
+        <p>Planos estruturados para erosão hídrica (PRAD) e vazamento de óleo.</p>
+      </div>
+      <div id="planos-list" class="planos-grid"></div>
+    </section>
+
+    <section id="relatorio" class="card reveal">
+      <div class="section-head">
+        <h2>Relatório de Recuperação de Área Degradada (PRAD)</h2>
+        <p>Diagnóstico, metas, cronograma e plano de ação para recuperação ambiental.</p>
+      </div>
+
+      <div id="relatorio-indicadores" class="relatorio-kpi-grid"></div>
+
+      <div class="relatorio-grid">
+        <article class="relatorio-card">
+          <h3>Diagnóstico Técnico</h3>
+          <div id="relatorio-diagnostico" class="list"></div>
+        </article>
+
+        <article class="relatorio-card">
+          <h3>Objetivos e Metas</h3>
+          <ul id="relatorio-metas" class="simple-list"></ul>
+        </article>
+      </div>
+
+      <article class="relatorio-card">
+        <h3>Cronograma de Recuperação</h3>
+        <div class="table-wrap">
+          <table class="relatorio-table">
+            <thead>
+              <tr>
+                <th>Fase</th>
+                <th>Período</th>
+                <th>Escopo</th>
+                <th>Entregável</th>
+              </tr>
+            </thead>
+            <tbody id="relatorio-cronograma"></tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="relatorio-card">
+        <h3>Plano de Ação</h3>
+        <div class="table-wrap">
+          <table class="relatorio-table">
+            <thead>
+              <tr>
+                <th>Ação</th>
+                <th>Responsável</th>
+                <th>Prazo</th>
+                <th>Prioridade</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="relatorio-acoes"></tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="relatorio-card">
+        <h3>Plano de Monitoramento</h3>
+        <ul id="relatorio-monitoramento" class="simple-list"></ul>
+      </article>
+    </section>
+
+    <section id="galeria" class="card reveal">
+      <div class="section-head">
+        <h2>Galeria Técnica da Apresentação</h2>
+        <p>Slides e fotos originais utilizados como base de consulta operacional.</p>
+      </div>
+      <div class="table-tools">
+        <input type="text" id="slide-search" placeholder="Buscar por tema: água, resíduos, carbono, licenciamento..." />
+      </div>
+      <div id="slides-grid" class="slides-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Aplicativo de Gestão de Resíduos | Engenharia & Sustentabilidade</p>
+  </footer>
+
+  <script src="data/slides-data.js?v=20260519"></script>
+  <script src="app.js?v=20260519"></script>
+  <script src="safe-fallback.js?v=20260519"></script>
+</body>
+</html>
+
